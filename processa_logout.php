@@ -1,5 +1,12 @@
 <?php
 	session_start();
+
+	if (!isset($_SESSION["id"]))
+	{
+		header('Location: ./');
+		die();
+	}
+	
 	session_unset();
 	session_destroy();
 ?>

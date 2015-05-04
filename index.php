@@ -1,11 +1,17 @@
+<!-- 
+	MATHEUS DE ALMEIDA AGUIAR CANDIDO
+	3º SEMESTRE JOGOS DIGITAIS
+ -->
+
+
 <?php
 	session_start();
 
 	if (isset($_SESSION["id"]))
 	{
 		header('Location: ./home.php');
+		die();
 	}
-	
 ?>
 <!DOCTYPE html>
 <html>

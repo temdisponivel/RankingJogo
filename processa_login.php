@@ -1,5 +1,17 @@
+<!-- 
+	MATHEUS DE ALMEIDA AGUIAR CANDIDO
+	3º SEMESTRE JOGOS DIGITAIS
+ -->
+
 <?php
 	session_start();
+
+	if (!isset($_POST["login"]))
+	{
+		header('Location: ./');
+		die();
+	}
+
 	$conn = new mysqli('localhost', 'root', '', 'jogo');
 	
 	if ($conn->connect_errno) 
