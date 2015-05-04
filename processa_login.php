@@ -1,5 +1,5 @@
 <?php
-	
+	session_start();
 	$conn = new mysqli('localhost', 'root', '', 'jogo');
 	
 	if ($conn->connect_errno) 
@@ -24,11 +24,15 @@
 
 		if ($jogador["senha"] == $_POST["senha"])
 		{
-			$sucesso = true;
+			$_SESSION["id"] = $jogador["id"];
+			$_SESSION["nome"] = $jogador["nome"];
+			header('Location: ./home.php');
+			die();
 		}
 		else
 		{
 			$mensagem = "Usuário ou senha incorreto!";
+			session_destroy();
 		}
 	}
 ?>
@@ -40,14 +44,8 @@
 	</head>
 	<body>
 		<?php
-			if ($sucesso == true)
-			{
-				echo "<p>Logado com sucesso!</p>";
-			}
-			else
-			{
-				echo "<p>Não foi possível realizar o login!</p>" . $mensagem;
-			}
+			echo "<p>Não foi possível realizar o login!</p>" . $mensagem;
+			echo "<a href='./'>Voltar</a>";
 		?>
 	</body>
 </html>

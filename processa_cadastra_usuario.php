@@ -6,9 +6,20 @@
 	    die('Ocoreu um erro interno: ' . $conn->connect_errno);
 	}
 
-	$sql = "INSERT INTO jogadores (nome, data_nascimento, sexo, login, senha) VALUES ('" . $_POST["nome"] . "', '" . $_POST["data_nascimento"] . "', " . $_POST["sexo"] . ", '" . $_POST["login"] . "', '" . $_POST["senha"] . "');";
+	$sql = "select id from jogadores where login = '" . $_POST["login"] . "';";
 
-	$sucesso = $conn->query($sql);
+	$retorno = $conn->query($sql);
+
+	if ($retorno->num_rows <= 0)
+	{
+		$sql = "INSERT INTO jogadores (nome, data_nascimento, sexo, login, senha) VALUES ('" . $_POST["nome"] . "', '" . $_POST["data_nascimento"] . "', " . $_POST["sexo"] . ", '" . $_POST["login"] . "', '" . $_POST["senha"] . "');";
+		$sucesso = $conn->query($sql);
+	}
+	else
+	{
+		$sucesso = false;
+		$mensagem = "Já existe um usuário cadastrado com o login " . $_POST["login"] . ". <a href='./cadastra_usuario.php'>Tente outro</a> ou <a href='./'>faça login.</a>";
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,11 +31,11 @@
 			if ($sucesso == true)
 			{
 				echo "<p>Usuário cadastrado com sucesso!</p>";
-				echo "<a href='/rankingjogo/'>Entrar</p>";
+				echo "<a href='./'>Entrar</p>";
 			}
 			else
 			{
-				echo "<p>Ocorreu um erro ao salvar os dados!</p>" . $conn->error;
+				echo $mensagem;
 			}
 		?>
 	</body>
